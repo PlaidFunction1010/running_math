@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>設計檢查 · 高中數學練習</title>
+  <link rel="stylesheet" href="./assets/css/styles.css?v20251103a" />
+</head>
+<body>
+  <header id="site-header" class="site-header"></header>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="text-xl font-extrabold mb-2">設計檢查</div>
+      <div id="sidebar"></div>
+    </aside>
+    <main class="main">
+      <div id="content" class="fs-large">
+        <section class="hero">
+          <h1>如果你看到漸層背景＋圓角白卡，就代表樣式成功載入</h1>
+          <p>此頁用來快速確認 GitHub Pages 路徑是否正確。</p>
+          <div class="cta">
+            <a class="btn btn-primary" href="./index.html">回首頁</a>
+            <a class="btn" href="./g10/unit1/topic1.html">對數運算</a>
+          </div>
+        </section>
+        <div class="grid" style="margin-top:1rem;">
+          <div class="card"><h2>卡片 A</h2><div class="meta">應有陰影與圓角</div></div>
+          <div class="card"><h2>卡片 B</h2><div class="meta">按鈕 hover 有變化</div></div>
+          <div class="card"><h2>卡片 C</h2><div class="meta">全站一致風格</div></div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script type="module">
+    import { initPage } from "./assets/js/app.js?v20251103a";
+    import { mountShell } from "./assets/js/shell.js?v20251103a";
+    initPage();
+    mountShell();
+  </script>
+  <script type="module" src="./assets/js/routes.js?v20251103a"></script>
+  <script type="module" src="./assets/js/sidebar.js?v20251103a"></script>
+</body>
+</html>

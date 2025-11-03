@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>高一・單元一・主題一：對數運算</title>
+  <link rel="stylesheet" href="../../assets/css/styles.css?v20251103a" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+  <header id="site-header" class="site-header"></header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="text-xl font-extrabold mb-2">導航</div>
+      <div id="sidebar"></div>
+      <hr class="my-4">
+      <div class="text-xs" style="color:#64748b">字體：14pt / 20pt · KaTeX</div>
+    </aside>
+
+    <main class="main">
+      <div class="breadcrumbs"><a href="../../index.html">首頁</a> / 高一・單元一・主題一：對數運算</div>
+      <div id="content" class="fs-large">
+        <section class="hero" style="padding:1.2rem; margin-bottom:1rem;">
+          <h1 style="margin:0;">高一・單元一・主題一：對數運算</h1>
+          <p style="margin:.25rem 0 0 0; color:#64748b">題量可選 5/10 · 詳解：關鍵步驟 + 最終式</p>
+        </section>
+
+        <div class="card" style="margin-bottom:1rem;">
+          <div class="flex items-center gap-2 mb-3">
+            <span>每回合題數：</span>
+            <select id="q-count" class="btn">
+              <option value="5">5 題</option>
+              <option value="10">10 題</option>
+            </select>
+            <button id="btn-start" class="btn btn-primary">開始練習</button>
+          </div>
+          <div id="problems"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer id="site-footer" class="site-footer"></footer>
+
+  <script type="module">
+    import { initPage } from "../../assets/js/app.js?v20251103a";
+    import { mountShell } from "../../assets/js/shell.js?v20251103a";
+    import { renderProblem } from "../../assets/js/engine.js?v20251103a";
+    import * as CONTENT from "../../content/g10/unit1/topic1.js?v20251103a";
+    initPage();
+    mountShell();
+
+    const btn = document.getElementById('btn-start');
+    const holder = document.getElementById('problems');
+    const select = document.getElementById('q-count');
+
+    btn.addEventListener('click', () => {
+      holder.innerHTML = '';
+      const problems = CONTENT.getProblems(select.value);
+      problems.forEach((p, idx) => renderProblem(holder, p, idx, problems.length));
+    });
+  </script>
+
+  <script type="module" src="../../assets/js/routes.js?v20251103a"></script>
+  <script type="module" src="../../assets/js/sidebar.js?v20251103a"></script>
+</body>
+</html>
