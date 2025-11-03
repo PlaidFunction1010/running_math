@@ -9,6 +9,20 @@ function nzRandInt(min, max){
   return v;
 }
 
+// 工具：將 "+(-4)" 之類的符號簡化為數學慣例（僅用於非 LaTeX 題目顯示）
+function prettySigns(str){
+  if(typeof str !== "string") return str;
+  // 1) "+(-3)" -> " - 3"
+  str = str.replace(/\+\s*\(-\s*([0-9]+(?:\.[0-9]+)?)\s*\)/g, " - $1");
+  // 2) "+ -" -> " - "
+  str = str.replace(/\+\s*-/g, " - ");
+  // 3) "--" -> "+"
+  str = str.replace(/--/g, "+");
+  // 4) 替換多餘的加號空格（微調，避免 " +  - " 的殘留）
+  str = str.replace(/\s+\+\s+-/g, " - ");
+  return str;
+}
+
 // ---- 題型 1：代入消去法 第一型 ----
 function generateType1Problem(){
   let xVal = randInt(-5,5);
@@ -41,6 +55,8 @@ function generateType1Problem(){
   const left2 = join(term(a,"x"), term(b,"y"));
   const eq1 = singleIsX ? `式(1)：x = ${xVal}` : `式(1)：y = ${yVal}`;
   const eq2 = `式(2)：${left2} = ${c}`;
+
+  const qHtml = prettySigns(eq1 + "\n" + eq2);
 
   let sol = "";
   if(singleIsX && b!==0){
@@ -77,7 +93,7 @@ function generateType1Problem(){
       usesLatex: false
     },
     payload: {
-      questionHtml: eq1 + "\n" + eq2,
+      questionHtml: qHtml,
       solutionHtml: sol,
       answers: { x: xVal, y: yVal }
     }
@@ -102,6 +118,8 @@ function generateType2Problem(){
   const left2 = join(term(a2,"x"),term(b2,"y"));
   const eq1 = `式(1)：${left1} = ${c1}`;
   const eq2 = `式(2)：${left2} = ${c2}`;
+
+  const qHtml = prettySigns(eq1 + "\n" + eq2);
 
   let sol = "";
   if(b1!==0){
@@ -142,7 +160,7 @@ function generateType2Problem(){
       usesLatex: false
     },
     payload: {
-      questionHtml: eq1 + "\n" + eq2,
+      questionHtml: qHtml,
       solutionHtml: sol,
       answers: { x: xVal, y: yVal }
     }
@@ -205,41 +223,24 @@ function generateType3Problem(){
 }
 
 // ---- 新題型：三角函數極值 第一題 ----
-// 題目： y = a cos^2 x + b sin^2 x + c sin x cos x ，求 y 的最大值與最小值
-// 條件： a,b,c ∈ Z（可負），且 (a/2 - b/2)^2 + (c/2)^2 為整數
-// 實作重點：只要 (a-b) 為偶數 且 c 為偶數，即可保證此條件成立。
 function generateTrigExt1(){
   // 1) 亂數 a,b 任意整數，c 必須為偶數；且 (a-b) 為偶數
   let a = randInt(-6,6);
   let b = randInt(-6,6);
-  // 強制 (a-b) 偶數
-  if ((a - b) % 2 !== 0) {
-    b += 1;
-  }
-  // c 強制偶數且非零
+  if ((a - b) % 2 !== 0) b += 1; // 強制差為偶數
   let c = 0;
-  while (c === 0 || c % 2 !== 0) {
-    c = randInt(-6,6);
-  }
+  while (c === 0 || c % 2 !== 0) c = randInt(-6,6); // c 偶數且非零
 
-  // 2) 轉換： cos^2 x = (1+cos2x)/2 ; sin^2 x = (1 - cos2x)/2 ; sin x cos x = (1/2) sin 2x
-  // y = (a+b)/2 + (a-b)/2 * cos 2x + (c/2) * sin 2x
   const d = (a + b) / 2;
   const A = (a - b) / 2;
   const B = c / 2;
-
-  // r = sqrt(A^2 + B^2)
   const r = Math.sqrt(A*A + B*B);
-
-  // 最大最小
   const ymax = d + r;
   const ymin = d - r;
 
-  // 題目（只顯示原式，其他推導藏在詳解）
-  const qHtml =
+  const qHtml = 
     `$$ y = ${a}\\cos^2 x + ${b}\\sin^2 x + ${c}\\sin x\\cos x \\quad \\text{，求 }y\\text{ 的最大值與最小值。} $$`;
 
-  // 詳解（以 LaTeX 呈現）
   const sHtml = [
     `$$
     \\begin{aligned}
@@ -264,8 +265,8 @@ function generateTrigExt1(){
 可用 \\( \\cos^2 x=\\tfrac{1+\\cos2x}{2},\\; \\sin^2 x=\\tfrac{1-\\cos2x}{2},\\; \\sin x\\cos x=\\tfrac{1}{2}\\sin2x \\)
 整理為 \\( y = d + r\\sin(2x+\\varphi) \\)`,
       inputs: [
-        { key: "ymax", label: "最大值 y_max =", type: "number" },
-        { key: "ymin", label: "最小值 y_min =", type: "number" }
+        { key: "ymax", label: "最大值 y_max =", type: "text" },
+        { key: "ymin", label: "最小值 y_min =", type: "text" }
       ],
       usesLatex: true
     },

@@ -112,7 +112,7 @@
       padding: 8px 12px; border-radius: 10px; cursor:pointer; font-weight:700; font-size:.65em;
       box-shadow: var(--shadow);
     }
-    .size-btn:hover{ border-color: var (--brand); color: var(--brand); }
+    .size-btn:hover{ border-color: var(--brand); color: var(--brand); }
 
     .header-text h1{
       display:flex; flex-wrap:wrap; align-items:baseline; gap:.6rem; font-weight:800;
@@ -154,8 +154,8 @@
       white-space: pre-line;
     }
 
-    .inputs-row{ display:flex; flex-wrap:wrap; gap:14px; align-items:flex-end; margin-bottom: 10px; }
-    .input-group{ display:flex; flex-direction:column; gap:6px; min-width: 120px; }
+    .inputs-row{ display:flex; flex-wrap:wrap; gap:14px; align-items:flex-end; margin-bottom: 6px; }
+    .input-group{ display:flex; flex-direction:column; gap:6px; min-width: 160px; }
     .input-group label{ color: var(--muted); font-size:.65em; font-weight:700; }
     .input-group input{
       background:#fffdfb; border: 1px solid var(--card-border); border-radius: 10px; padding:10px 12px;
@@ -163,9 +163,18 @@
     }
     .input-group input:focus{ outline: 2px solid var(--brand-weak); border-color: var(--brand); }
 
+    /* 簡易數學鍵盤 */
+    .mathpad{ display:flex; gap:8px; flex-wrap:wrap; margin: 2px 0 10px 0; }
+    .mathpad button{
+      border:1px solid var(--card-border); background: var(--paper); color: var(--ink);
+      padding:8px 10px; border-radius: 10px; cursor:pointer; font-weight:800; font-size:.75em;
+      box-shadow: var(--shadow);
+    }
+    .mathpad button:hover{ border-color: var(--brand); color: var(--brand); }
+
     .feedback{ font-weight:800; min-height: 1.2em; font-size:.75em; }
-    .correct{ color: var (--accent); }
-    .wrong{ color: var (--danger); }
+    .correct{ color: var(--accent); }
+    .wrong{ color: var(--danger); }
 
     .solution-wrapper{ border-top:1px solid var(--card-border); padding-top: 12px; }
     .solution-toggle-btn{ color: var(--brand); cursor:pointer; display:inline-flex; gap:6px; font-weight:800; font-size:.7em; }
@@ -226,6 +235,11 @@
 
         <!-- 動態輸入欄位容器（依題型渲染） -->
         <div id="inputsContainer" class="inputs-row"></div>
+
+        <!-- 簡易數學鍵盤：目前僅提供根號 -->
+        <div class="mathpad">
+          <button id="btn-insert-sqrt" title="插入根號">√</button>
+        </div>
 
         <div class="feedback" id="feedback"></div>
 
