@@ -4,65 +4,37 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>高中數學練習首頁</title>
-  <link rel="stylesheet" href="./assets/css/styles.css?v20251103a" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 </head>
 <body>
   <header id="site-header" class="site-header"></header>
-
   <div class="layout">
     <aside class="sidebar">
       <div class="text-xl font-extrabold mb-2">導航</div>
       <div id="sidebar"></div>
-      <hr class="my-4">
-      <div class="text-xs" style="color:#64748b">字體：14pt / 20pt · KaTeX</div>
     </aside>
-
     <main class="main">
       <div id="content" class="fs-large">
         <section class="hero">
           <h1>系統化的高中數學練習</h1>
-          <p>選年級 → 單元 → 主題，立即開始。內建 LaTeX 公式、數學鍵盤與答案驗證。</p>
+          <p>選年級 → 單元 → 主題，立即開始。支援 KaTeX 公式、數學鍵盤、答案驗證。</p>
           <div class="cta">
-            <a class="btn btn-primary" href="./g10/unit1/topic1.html">開始練習：對數運算</a>
-            <a class="btn" href="./g10/unit1/topic2.html">前往：對數方程</a>
-          </div>
-        </section>
-
-        <div class="breadcrumbs">首頁</div>
-
-        <section>
-          <h2 class="text-xl font-bold" style="margin:.75rem 0;">年級與單元</h2>
-          <div class="grid">
-            <a class="card" href="./g10/unit1/topic1.html">
-              <h2>高一 · 指數與對數</h2>
-              <div class="meta">主題一：對數運算 · 主題二：對數方程</div>
-            </a>
-            <div class="card">
-              <h2>高二 · 即將推出</h2>
-              <div class="meta">三角、數列、機率與統計</div>
-            </div>
-            <div class="card">
-              <h2>高三 · 即將推出</h2>
-              <div class="meta">極限、微積分、向量</div>
-            </div>
+            <a class="btn btn-primary" href="./g11/unit1/tri-extrema3.html">開始：高二·三角極值練習</a>
           </div>
         </section>
       </div>
     </main>
   </div>
-
   <footer id="site-footer" class="site-footer"></footer>
-
   <script type="module">
-    import { initPage } from "./assets/js/app.js?v20251103a";
-    import { mountShell } from "./assets/js/shell.js?v20251103a";
-    initPage();
-    mountShell();
+    import { initPage } from "./assets/js/app.js";
+    import { mountShell } from "./assets/js/shell.js";
+    initPage(); mountShell();
   </script>
-  <script type="module" src="./assets/js/routes.js?v20251103a"></script>
-  <script type="module" src="./assets/js/sidebar.js?v20251103a"></script>
+  <script type="module" src="./assets/js/routes.js"></script>
+  <script type="module" src="./assets/js/sidebar.js"></script>
 </body>
 </html>

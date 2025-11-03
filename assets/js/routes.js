@@ -1,4 +1,3 @@
-// Define site structure for sidebar & navigation
 export const ROUTES = [
   {
     grade: "高一",
@@ -18,7 +17,9 @@ export const ROUTES = [
     grade: "高二",
     key: "g11",
     units: [
-      { name: "單元一：三角函數", key: "unit1", topics: [] },
+      { name: "單元一：三角函數", key: "unit1", topics: [
+        { name: "主題八：三種常見極值題目練習", path: "g11/unit1/tri-extrema3.html" }
+      ] },
       { name: "單元二：指數與對數的運算", key: "unit2", topics: [] },
       { name: "單元三：指數函數與對數函數", key: "unit3", topics: [] },
       { name: "單元四：平面向量基本運算", key: "unit4", topics: [] },
@@ -30,9 +31,5 @@ export const ROUTES = [
       { name: "單元十：矩陣", key: "unit10", topics: [] },
     ]
   },
-  {
-    grade: "高三",
-    key: "g12",
-    units: []
-  },
+  { grade: "高三", key: "g12", units: [] },
 ];
