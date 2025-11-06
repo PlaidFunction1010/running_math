@@ -90,11 +90,65 @@ function showScore() {
   document.getElementById("scoreboard").textContent = `得分：${ok} / ${total}`;
 }
 
+// === 在檔案頂端既有程式碼之後，直接用這段覆蓋 __mountApp ===
 window.__mountApp = function () {
   const root = document.getElementById("app");
+  const anchorsBar = document.getElementById("type-anchors"); // 可能為 null，容錯即可
   root.innerHTML = "";
 
-  state.questions.forEach((q) => {
+  // 1) 依題型分組（保留你的中文題型）
+  const TYPE_ORDER = ["單選題", "多選題", "選填題", "非選擇題"];
+  const grouped = Object.fromEntries(TYPE_ORDER.map(t => [t, []]));
+  (state.questions || []).forEach(q => {
+    if (grouped[q.type]) grouped[q.type].push(q);
+    else {
+      // 未知型別也能顯示：直接當作一組
+      if (!grouped[q.type]) grouped[q.type] = [];
+      grouped[q.type].push(q);
+    }
+  });
+
+  // 2) 生成頂部錨點列（如果有放 <nav id="type-anchors">）
+  if (anchorsBar) {
+    anchorsBar.innerHTML = TYPE_ORDER
+      .filter(t => (grouped[t] && grouped[t].length > 0))
+      .map(t => `<a class="tag" href="#sec-${t}">${t}（${grouped[t].length}）</a>`)
+      .join(" ");
+  }
+
+  // 3) 逐區渲染：先輸出分區標頭（.meta + .tag），再塞入原本的卡片
+  TYPE_ORDER.forEach(type => {
+    const list = grouped[type] || [];
+    if (list.length === 0) return;
+
+    // 分區容器（不用新樣式，直接用 id 與一個 meta 當小標）
+    const section = document.createElement("div");
+    section.id = `sec-${type}`;
+
+    // 分區標頭（沿用你的 .meta/.tag）
+    const header = document.createElement("div");
+    header.className = "meta";
+    header.innerHTML = `
+      <span class="tag">${type}</span>
+      <span>本區 ${list.length} 題</span>
+      ${type === "非選擇題" ? `<span class="small">（此區需人工批改）</span>` : ""}
+    `;
+    section.appendChild(header);
+
+    // 分區內的每題卡片（沿用你原本的卡片渲染方式）
+    list.forEach(q => {
+      section.appendChild(renderCard(q));
+    });
+
+    root.appendChild(section);
+  });
+
+  // 4) 顯示分數與重排數學
+  showScore();
+  rerenderMath();
+
+  // === 把你原本建立題目卡片的邏輯，抽成一個函式（直接貼舊程式碼即可）===
+  function renderCard(q) {
     const card = document.createElement("div");
     card.className = "card";
 
@@ -139,7 +193,6 @@ window.__mountApp = function () {
       row.appendChild(btn);
       row.appendChild(result);
     }
-
     else if (q.type === "多選題") {
       q.options.forEach((opt, i) => {
         const label = document.createElement("label");
@@ -166,7 +219,6 @@ window.__mountApp = function () {
       row.appendChild(btn);
       row.appendChild(result);
     }
-
     else if (q.type === "選填題") {
       const inputs = q.correct.map((_, i) => {
         const input = document.createElement("input");
@@ -185,13 +237,26 @@ window.__mountApp = function () {
       };
       row.appendChild(btn);
       row.appendChild(result);
+    } else {
+      // 若未來你新增 "非選擇題" 類型，這裡預留簡單 textarea（不計分）
+      const ta = document.createElement("textarea");
+      ta.className = "answer";
+      ta.placeholder = "請在此書寫解題過程與答案（此題需人工批改）";
+      ta.style.minHeight = "120px";
+      row.appendChild(ta);
+      const note = document.createElement("span");
+      note.className = "result hint";
+      note.textContent = "此題不自動計分，交卷後由老師批改。";
+      row.appendChild(note);
     }
 
     card.appendChild(meta);
     card.appendChild(qtext);
     card.appendChild(row);
-    root.appendChild(card);
-  });
+    return card;
+  }
+};
+
 
   showScore();
   rerenderMath();
