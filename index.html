@@ -5,25 +5,63 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>114 學測 數學A｜線上練習 v2</title>
   <link rel="stylesheet" href="styles.css"/>
+  <style>
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+    .sidebar {
+      width: 220px;
+      background: #1a2f1a;
+      padding: 20px;
+      border-right: 1px solid var(--border);
+    }
+    .sidebar h2 {
+      font-size: 20px;
+      margin-bottom: 16px;
+      color: var(--accent);
+    }
+    .sidebar a {
+      display: block;
+      margin-bottom: 12px;
+      color: #fff;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 8px;
+      background: #2f4f2f;
+    }
+    .sidebar a:hover {
+      background: var(--accent);
+      color: #000;
+    }
+    .main-content {
+      flex: 1;
+      padding: 40px;
+    }
+  </style>
 </head>
-<body class="landing">
-  <div class="hero">
-    <h1>114 學測｜數學A</h1>
-    <p class="lead">開始測驗 → 交卷 → 看成績（非選擇題調整為單選以及填充模式）。</p>
-    <div class="actions">
-      <a class="btn primary" href="quiz.html">開始測驗</a>
-      <a class="btn primary" href="113_mathA_quiz.html">113學測數A</a>
-      <a class="btn" href="#how">流程說明</a>
+<body>
+  <div class="layout">
+    <nav class="sidebar">
+      <h2>選單</h2>
+      <a href="quiz.html">開始測驗</a>
+      <a href="#how">流程說明</a>
+      <a href="https://plaidfunction1010.github.io/plaidmath/pro/index.html">升級 Pro 版</a>
+    </nav>
+    <div class="main-content">
+      <h1>114 學測｜數學A</h1>
+      <p class="lead">開始測驗 → 交卷 → 看成績（自動計分僅含選擇題；選填題顯示作答，待教師批改）。</p>
+
+      <section id="how" class="panel">
+        <h2>流程說明</h2>
+        <ol>
+          <li>按「開始測驗」，進入 Q1–Q17。</li>
+          <li>作答完成後按「交卷」。</li>
+          <li>系統自動計分 <b>Q1–Q12</b>，並產生成績單；<b>Q13–Q17</b>顯示原樣作答，留給老師批改。</li>
+        </ol>
+        <p class="small">來源：大考中心 114 學測數學A試題。本頁僅供學習練習。</p>
+      </section>
     </div>
   </div>
-  <section id="how" class="panel">
-    <h2>流程說明</h2>
-    <ol>
-      <li>按「開始測驗」，進入 Q1–Q17。</li>
-      <li>作答完成後按「交卷」。</li>
-      <li>系統自動計分 <b>Q1–Q12</b>，並產生成績單；<b>Q13–Q17</b>顯示原樣作答，留給老師批改。</li>
-    </ol>
-    <p class="small">來源：大考中心 114 學測數學A試題。本頁僅供學習練習。</p>
-  </section>
 </body>
 </html>
