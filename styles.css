@@ -58,12 +58,13 @@ input.answer {
   margin: 0 6px;
 }
 
-/* 讓選項逐行顯示（單選/多選都適用） */
-.options { display: block; }
-.options .opt { display: block; margin: 6px 0; }
 
 input.answer:focus {
   outline: none;
   border-bottom-color: var(--accent, #167d6d);
   box-shadow: 0 2px 0 0 var(--accent, #167d6d);
 }
+
+/* 讓選項逐行顯示（單選/多選都適用） */
+.options { display: block; }
+.options .opt { display: block; margin: 6px 0; }
