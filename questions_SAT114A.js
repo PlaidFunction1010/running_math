@@ -57,6 +57,17 @@ function fillQ(id, html, correctArray) {
   };
 }
 
+function openQ(id, html) {
+  return {
+    id,
+    type: "非選擇題",
+    render: () => html,
+    correct: [],              // 不自動評分
+    answerCheck: () => null,  // 永遠回傳 null 代表交老師批改
+  };
+}
+
+
 const qs = [];
 
 // 題目資料（略）——你已經貼過，我這裡省略，假設你已經填好 qs.push(...) 的題庫
@@ -82,6 +93,9 @@ qs.push(fillQ(14, `點 A(a,b,c) 與三平面 E₁:4y+3z=2、E₂:3y+4z=-5、E₃
 qs.push(fillQ(15, `假日市集玩偶遊戲，依擲硬幣次數決定價格。試問顧客購得玩偶的期望花費為 (15-1)(15-2)(15-3) 元。`, ["4", "0", "5"]));
 qs.push(fillQ(16, `設 L₁、L₂ 為通過 (3,1)，斜率分別為 m、-m 的直線，與圓心在原點的圓交於 A, B，且圓心到 L₁ 距離為 1，L₂ 與圓相切。則弦 AB 長度為 (16-1)(16-2)(16-3)。`, ["2", "4", "5"]));
 qs.push(fillQ(17, `在 △ABC 中，AB = BC = 3，cos∠ABC = -1/2，外接圓上有一點 D 滿足 BD = 4 且 AD ≤ CD，則 CD = (17-1)+(17-2)。`, ["3", "2"]));
+
+// 非選擇題 Q18（不自動批改）
+qs.push(openQ(18, `請證明：若 $\\triangle ABC$ 為銳角三角形，則其外心位於三角形內部。\\n（可使用垂直平分線性質）`));
 
 
 state.questions = qs;
