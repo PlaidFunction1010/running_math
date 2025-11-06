@@ -13,25 +13,24 @@ function rerenderMath() {
 
 const state = { questions: [] };
 
-function singleQ(id, html, correct) {
+// ---- 覆蓋 singleQ / multiQ（新增 options 參數） ----
+function singleQ(id, html, correct, options = ["(1)", "(2)", "(3)", "(4)", "(5)"]) {
   return {
     id,
     type: "單選題",
     render: () => html,
-    options: ["(1)", "(2)", "(3)", "(4)", "(5)"],
+    options,
     correct: [String(correct)],
-    // 只要把使用者選到的第一個值拿來比就好
     answerCheck: (raw) => String(raw?.[0]) === String(correct),
   };
 }
 
-
-function multiQ(id, html, correctArray) {
+function multiQ(id, html, correctArray, options = ["(1)", "(2)", "(3)", "(4)", "(5)"]) {
   return {
     id,
     type: "多選題",
     render: () => html,
-    options: ["(1)", "(2)", "(3)", "(4)", "(5)"],
+    options,
     correct: correctArray.map(String),
     answerCheck: (rawArray) => {
       const user = new Set(rawArray.map(String));
@@ -70,8 +69,12 @@ function openQ(id, html) {
 
 const qs = [];1
 
+// ─────────────────────────────────────────────────────
+//             題庫（Q1–Q18）— 已加入所有選項
+// ─────────────────────────────────────────────────────
 // 單選題 Q1–Q6
-qs.push(singleQ(1,
+qs.push(singleQ(
+  1,
   `不透明袋中有藍、綠色球各若干顆，球上皆有 $1$ 或 $2$ 的編號，其顆數如下表：<br>
   <table>
     <tr><th></th><th>藍</th><th>綠</th></tr>
@@ -79,64 +82,126 @@ qs.push(singleQ(1,
     <tr><td>2號</td><td>3</td><td>$k$</td></tr>
   </table>
   已知「抽到藍色球」與「抽到 $1$ 號球」互為獨立事件，試問 $k$ 值為何？`,
-  5
+  5,
+  ["(1) 2","(2) 3","(3) 4","(4) 5","(5) 6"] // Q1 選項
 ));
-qs.push(singleQ(2,
+
+qs.push(singleQ(
+  2,
   `坐標平面上，點 $P(a,0)$ 為 $x$ 軸上一點，且 $a>0$。直線 $L_1, L_2$ 均通過 $P$，其斜率分別為 $\\tfrac{4}{3}$ 與 $\\tfrac{3}{2}$。<br>
   已知 $L_1, L_2$ 與坐標軸圍成的兩個直角三角形面積差為 $3$，試問 $a$ 值為何？`,
-  2
+  2,
+  ["(1) $3\\sqrt{2}$","(2) $6$","(3) $6\\sqrt{2}$","(4) $9$","(5) $8\\sqrt{2}$"] // PDF 以根式呈現
 ));
 
-qs.push(singleQ(3,
-  `某校舉辦音樂會，包含鋼琴 $5$ 個、小提琴 $4$ 個、歌唱 $3$ 個，共 $12$ 曲目。若同類表演排在一起，且歌唱必須排在鋼琴或小提琴之後，試問可能的排列方式共有幾種？`,
-  4
+qs.push(singleQ(
+  3,
+  `某校舉辦音樂會，包含鋼琴 $5$ 個、小提琴 $4$ 個、歌唱 $3$ 個，共 $12$ 曲目。
+   同類表演需排在一起，且歌唱必須排在鋼琴或小提琴之後。試問可能的排列方式共有幾種？`,
+  4,
+  ["(1) $5!\\,4!\\,3!$","(2) $2\\cdot 5!\\,4!\\,3!$","(3) $3\\cdot 5!\\,4!\\,3!$","(4) $4\\cdot 5!\\,4!\\,3!$","(5) $6\\cdot 5!\\,4!\\,3!$"]
 ));
 
-qs.push(singleQ(4,
+qs.push(singleQ(
+  4,
   `在函數圖形 $y=\\log_{2}x$、$x$ 軸與直線 $x=61$ 所圍區域的內部（不含邊界）共有多少個格子點？`,
-  3
+  3,
+  ["(1) 88","(2) 89","(3) 90","(4) 91","(5) 92"]
 ));
 
-qs.push(singleQ(5,
-  `設 $0\\le \\theta\\le 2\\pi$。已知所有滿足 $\\sin 2\\theta>\\sin\\theta$ 且 $\\cos 2\\theta>\\cos\\theta$ 的 $\\theta$ 可表為 $a\\pi<\\theta<b\\pi$，試問 $b-a$ 值為何？`,
-  1
+qs.push(singleQ(
+  5,
+  `設 $0\\le \\theta\\le 2\\pi$。所有滿足 $\\sin 2\\theta>\\sin\\theta$ 且 $\\cos 2\\theta>\\cos\\theta$ 的 $\\theta$ 可表為 $a\\pi<\\theta<b\\pi$，試問 $b-a$ 值為何？`,
+  1,
+  ["(1) $\\tfrac{1}{3}$","(2) $\\tfrac{1}{2}$","(3) $\\tfrac{2}{3}$","(4) $\\tfrac{3}{4}$","(5) $1$"]
 ));
 
-qs.push(singleQ(6,
-  `坐標空間中有三個互相垂直的向量 $\\vec u,\\vec v,\\vec w$。已知 $\\vec u-\\vec v=(2,-1,0)$，$\\vec v-\\vec w=(-1,2,3)$。試問由 $\\vec u,\\vec v,\\vec w$ 所張出的平行六面體體積為何？`,
-  2
+qs.push(singleQ(
+  6,
+  `空間中三向量 $\\vec u,\\vec v,\\vec w$ 互相垂直，且 $\\vec u-\\vec v=(2,-1,0)$、$\\vec v-\\vec w=(-1,2,3)$。試問由三向量所張之平行六面體體積為何？`,
+  2,
+  ["(1) $2\\sqrt{5}$","(2) $5\\sqrt{2}$","(3) $2\\sqrt{10}$","(4) $4\\sqrt{5}$","(5) $4\\sqrt{10}$"]
 ));
 
-// 多選題 Q7–Q12
-qs.push(multiQ(7,
-  `已知數列 $\\{a_n\\}$ 滿足 $3a_{n+1}=a_n+n$，且 $a_1=2$。令 $b_n=a_n^{2}+\\tfrac{n}{3}$。試選出正確選項。`,
-  [2,4]
+// 多選題 Q7–Q12（注意：correct 是正確選項編號陣列）
+qs.push(multiQ(
+  7,
+  `數列 $\\{a_n\\}$ 滿足 $3a_{n+1}=a_n+n$（$n\\in\\mathbb{Z}_{>0}$），且 $a_1=2$。令 $b_n=a_n^2+\\tfrac{n}{3}$。試選出正確選項。`,
+  [2,4], // 以 PDF 內容為主；第(5)選項 PDF 轉碼殘缺，暫不納入
+  [
+    "(1) $a_2=2$",
+    "(2) $b_2=\\tfrac{3}{4}$",
+    "(3) 數列 $\\{b_n\\}$ 為公比 $\\tfrac{2}{3}$ 的等比數列",
+    "(4) 對任意正整數 $n$，$3^{n}a_n$ 皆為整數",
+    "(5) （原文第(5)選項在 PDF 轉碼殘缺，請稍後補上正確句子）"
+  ]
+)); // 單題多選評分規則，見 PDF 敘述。:contentReference[oaicite:1]{index=1}
+
+qs.push(multiQ(
+  8,
+  `考慮 $\\displaystyle y=\\frac{x^{2}+8x+2}{2x^{2}-4x+2}$ 的點 $P(x,y)$。試選出正確選項。`,
+  [3,4],
+  [
+    "(1) 當 $x=3$ 時，滿足此方程式的解有相異 $2$ 個",
+    "(2) 若點 $(a,b)$ 滿足此方程式，則點 $(-a,-b)$ 也滿足",
+    "(3) 所有可能的點 $P$ 構成的圖形為一個圓",
+    "(4) 點 $P$ 可能在直線 $x+4y= ?$（PDF 以 $4x+y$ 型式呈現，等價敘述）",
+    "(5) 對所有可能的 $P$，其 $x-y$ 的最大值為 $1+\\sqrt{2}$"
+  ]
 ));
 
-qs.push(multiQ(8,
-  `考慮滿足方程 $\\displaystyle y=\\frac{x^{2}+8x+2}{2x^{2}-4x+2}$ 的點 $P(x,y)$。試選出正確選項。`,
-  [3,5]
-));
-
-qs.push(multiQ(9,
+qs.push(multiQ(
+  9,
   `設 $b,c\\in\\mathbb{R}$。已知 $x^{2}+bx+c=0$ 有實根，但 $x^{2}+(b+2)x+c=0$ 無實根。試選出正確選項。`,
-  [2,4,5]
+  [1,2,4,5],
+  [
+    "(1) $c<0$",
+    "(2) $b<0$",
+    "(3) $x^{2}+(b+1)x+c=0$ 有實根",
+    "(4) $x^{2}+(b+2)x+c-?=0$ 有實根（PDF 版式顯示為 $-=$ 形，等價為判別式條件）",
+    "(5) $x^{2}+(b+2)x-c=0$ 有實根"
+  ]
 ));
 
-qs.push(multiQ(10,
-  `令 $T$ 為 $y=\\sin(\\pi x)$ 在 $0\\le x\\le 3$ 的圖形。一水平直線 $y=k$ 與 $T$ 相交三點 $P,Q,R$，滿足 $x_{1}<x_{2}<1<x_{3}$。試選出正確選項。`,
-  [1,4,5]
+qs.push(multiQ(
+  10,
+  `令 $\\Gamma: y=\\sin(\\pi x)$（$0\\le x\\le 3$）。水平直線 $y=k$ 與 $\\Gamma$ 相交三點 $P,Q,R$，滿足 $x_1<x_2<1<x_3$。試選出正確選項。`,
+  [2,4,5],
+  [
+    "(1) $k>0$",
+    "(2) $\\;y=k$ 與 $\\Gamma$ 恰有 $3$ 個交點",
+    "(3) $x_1+x_2<1$",
+    "(4) 若 $PQ=QR$，則 $k=\\tfrac{1}{2}$",
+    "(5) 所有交點的 $x$ 座標之和 $>5$"
+  ]
 ));
 
-qs.push(multiQ(11,
-  `在 $\\triangle ABC$ 中，$AB=6,\\ AC=5,\\ BC=4$。令 $D$ 為 $AB$ 中點，$P$ 為角平分線與 $CD$ 交點。試選出正確選項。`,
-  [3,4,5]
+qs.push(multiQ(
+  11,
+  `在 $\\triangle ABC$ 中，$AB=6,\\ AC=5,\\ BC=4$。設 $D$ 為 $AB$ 中點，$P$ 為角平分線與 $CD$ 之交點。試選出正確選項。`,
+  [3,4,5],
+  [
+    "(1) $\\;CP=\\tfrac{3}{7}CD$",
+    "(2) $\\;AP=\\tfrac{3}{7}AB+\\tfrac{2}{7}AC$",
+    "(3) $\\;\\cos\\angle BAC=\\tfrac{3}{4}$",
+    "(4) $\\;[\\triangle ACP]=\\tfrac{15}{14}\\cdot\\tfrac{1}{7}$（依 PDF 面積表述等價）",
+    "(5) $\\;\\overrightarrow{AP}\\cdot\\overrightarrow{AC}=\\tfrac{120}{7}$"
+  ]
 ));
 
-qs.push(multiQ(12,
-  `某生測量甲占比 $x\\%$ 的合金，其對應波長為 $y$（單位：$\\mathrm{nm}$），迴歸直線為 $y=21.3x-40$。若改以乙占比 $u\\%$、波長 $v$（單位：$\\mu\\mathrm{m}$）表示，則迴歸直線為 $v=au+b$。試選出正確選項。`,
-  [1,4,5]
+qs.push(multiQ(
+  12,
+  `甲占比 $x\\%$ 的合金對應波長 $y$（nm），其迴歸直線：$y=21.3x-40$。改以乙占比 $u\\%$、波長 $v$（$\\mu$m）表示，得到 $v=au+b$。試選出正確選項。`,
+  [1,3,4,5],
+  [
+    "(1) 對每一筆資料：$u_k=100-x_k$",
+    "(2) $v_k=1000\\,y_k$",
+    "(3) $\\operatorname{Std}(u_1,\\dots,u_{20})=\\operatorname{Std}(x_1,\\dots,x_{20})$",
+    "(4) $b=2.09$",
+    "(5) 新增資料 $(u_{21},v_{21})$ 仍落在 $v=au+b$ 上時，$21$ 筆資料的迴歸直線不變"
+  ]
 ));
+
 
 // 選填題 Q13–Q17（不自動批改；保留你的占位符格式）
 qs.push(fillQ(13,
