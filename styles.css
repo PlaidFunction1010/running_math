@@ -45,3 +45,20 @@ input.answer{flex:1;min-width:180px;padding:10px 12px;border-radius:10px;border:
 .landing .lead{color:var(--muted);margin-top:0}
 .landing .actions{margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .katex{font-size:1.05em}
+
+/* 讓選填題的輸入框看起來像考卷底線空格 */
+input.answer {
+  border: 0;
+  border-bottom: 2px solid var(--fg, #0b1f1a);
+  background: transparent;
+  width: 64px;
+  text-align: center;
+  font-size: 16px;
+  padding: 2px 4px;
+  margin: 0 6px;
+}
+input.answer:focus {
+  outline: none;
+  border-bottom-color: var(--accent, #167d6d);
+  box-shadow: 0 2px 0 0 var(--accent, #167d6d);
+}
