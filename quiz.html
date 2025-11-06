@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>114 學測 數學A｜作答</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <link rel="stylesheet" href="styles.css?v=2"/>
+  <script>
+    (function boot(){
+      function ready(){ return document.readyState==='complete'||document.readyState==='interactive'; }
+      function katexReady(){ return typeof renderMathInElement === 'function'; }
+      function mount(){
+        if (!window.__APP_BOOTED && ready() && katexReady() && typeof window.__mountApp==='function'){
+          window.__APP_BOOTED = true; window.__mountApp();
+        } else { setTimeout(mount, 40); }
+      }
+      mount();
+    })();
+  </script>
+</head>
+<body>
+  <header>
+    <h1>114 學測 數學A <span class="badge">作答頁</span></h1>
+    <div class="toolbar">
+      <a class="btn" href="index.html">← 回首頁</a>
+      <button id="btn-submit" class="btn primary">交卷</button>
+    </div>
+  </header>
+  <main id="app"></main>
+
+  <div id="result" class="result-modal hidden">
+    <div class="modal">
+      <h2>成績單</h2>
+      <div id="scoreline"></div>
+      <div id="breakdown" class="panel"></div>
+      <div class="actions">
+        <a class="btn" href="index.html">回首頁</a>
+        <button class="btn" onclick="window.print()">列印/存成 PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p class="small">※ 本頁僅統計 Q1–Q12（選擇題）得分；Q13–Q17（選填）顯示作答內容，留待老師批改。</p>
+  </footer>
+
+  <script src="questions.js?v=2"></script>
+</body>
+</html>
