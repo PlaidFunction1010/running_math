@@ -3,77 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>114 學測 數學A｜題目頁</title>
-
-  <!-- 基礎樣式（可和你的全站 styles.css 共存） -->
-  <style>
-    :root{
-      --accent: #9be37d;
-      --muted:#f6f7f8;
-      --border:#e5e7eb;
-      --ink:#0f172a;
-    }
-    body{ font-family: system-ui,-apple-system,"Noto Sans TC",Segoe UI,Roboto,Arial; color:var(--ink); margin:0; background:#fff; }
-    header{ padding:16px 24px; border-bottom:1px solid var(--border); display:flex; gap:16px; align-items:center; }
-    header h1{ font-size:18px; margin:0; }
-    header .actions{ margin-left:auto; display:flex; gap:12px; }
-    button{ padding:10px 14px; border-radius:10px; border:1px solid var(--border); background:#fff; cursor:pointer; }
-    button.primary{ background:var(--accent); border-color:#78d65b; }
-    main{ max-width:1100px; margin:24px auto; padding:0 16px 64px; }
-    .section{ margin:28px 0 40px; padding:18px; background:var(--muted); border:1px solid var(--border); border-radius:16px; }
-    .section h2{ margin:0 0 8px; font-size:20px; }
-    .section .meta{ color:#475569; font-size:14px; margin-bottom:12px; }
-    .qcard{ background:#fff; border:1px solid var(--border); border-radius:14px; padding:14px; margin:14px 0; }
-    .qhead{ font-weight:600; margin-bottom:8px; }
-    .qbody{ line-height:1.6; }
-    .opts{ margin-top:10px; display:grid; gap:8px; }
-    .opt{ padding:10px 12px; border:1px solid var(--border); border-radius:10px; display:flex; gap:10px; align-items:flex-start; background:#fff; }
-    .opt input{ margin-top:4px; }
-    .fill{
-      margin-top:10px; display:flex; gap:10px; align-items:center;
-    }
-    .fill input{
-      flex:1; padding:10px 12px; border:1px solid var(--border); border-radius:10px;
-    }
-    .open textarea{
-      width:100%; min-height:120px; padding:10px 12px; border:1px solid var(--border); border-radius:10px; resize:vertical;
-    }
-    .scoreboard{
-      position:sticky; bottom:0; background:#0b1220; color:#fff; border-top:1px solid #000;
-      padding:12px 16px; display:flex; gap:16px; align-items:center; justify-content:space-between;
-    }
-    .scoreboard .left{ display:flex; gap:18px; align-items:center; }
-    .badge{ background:#111827; border:1px solid #374151; padding:6px 10px; border-radius:999px; font-size:14px; }
-    .hint{ color:#94a3b8; font-size:13px; }
-    .anchor-list{ display:flex; gap:10px; flex-wrap:wrap; margin-top:6px; }
-    .anchor-list a{ text-decoration:none; font-size:13px; background:#eef2ff; padding:6px 8px; border-radius:8px; border:1px solid #c7d2fe; }
-    .judge-note{ font-size:13px; color:#64748b; }
-  </style>
-
-  <!-- KaTeX（讓數學排版漂亮） -->
+  <title>114 學測｜數學A</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-
+  <link rel="stylesheet" href="styles.css?v=free112"/>
   <script>
-    // 讓外部 JS 可以呼叫的數學重排
-    window.rerenderMath = function(){
-      if (typeof renderMathInElement === 'function') {
-        renderMathInElement(document.body, {
-          delimiters: [
-            {left: "$$", right: "$$", display: true},
-            {left: "$", right: "$", display: false}
-          ]
-        });
-      }
-    };
-    // DOM 與 KaTeX 好了就掛 App
     (function boot(){
       function ready(){ return document.readyState==='complete'||document.readyState==='interactive'; }
       function katexReady(){ return typeof renderMathInElement === 'function'; }
       function mount(){
         if (!window.__APP_BOOTED && ready() && katexReady() && typeof window.__mountApp==='function'){
-          window.__APP_BOOTED = true; window.__mountApp(); window.rerenderMath();
+          window.__APP_BOOTED = true; window.__mountApp();
         } else { setTimeout(mount, 40); }
       }
       mount();
@@ -82,28 +23,22 @@
 </head>
 <body>
   <header>
-    <h1>114 學測 數學A｜題目</h1>
-    <div class="actions">
-      <button id="btnStart">開始測驗</button>
-      <button id="btnSubmit" class="primary">交卷</button>
+    <h1>114 學測｜數學A<span class="badge">免費練習版</span></h1>
+    <p class="subtitle">此頁完全比照原題（固定數字）。</p>
+    <div class="toolbar">
+      <a class="cta" id="pro-cta" href="../pro/index.html">
+        立即升級為 Pro 版本 → 支援參數化練習、自動批改、歷屆題庫整合
+      </a>
+      <span id="scoreboard">得分：0 / 0</span>
     </div>
   </header>
 
-  <main id="app">
-    <!-- 內容由 JS 依題型分區塊渲染 -->
-  </main>
+  <main id="app"></main>
 
-  <div class="scoreboard" id="scoreboard">
-    <div class="left">
-      <span class="badge" id="scoreText">得分：0 / 0（只計單選/多選/填充）</span>
-      <span class="hint" id="openHint">尚有「非選擇題」需人工批改</span>
-    </div>
-    <div class="anchor-list" id="anchors">
-      <!-- 快速跳轉錨點由 JS 產生 -->
-    </div>
-  </div>
+  <footer>
+    <p>若要開通 Pro 版，點擊上方按鈕連到金流（綠界/藍新/LINE Pay），付款後將寄出「授權連結或金鑰」。</p>
+  </footer>
 
-  <!-- 題庫與渲染邏輯 -->
-  <script src="questions_SAT114A.js?v=3"></script>
+  <script src="questions_SAT114A.js?v=2"></script>
 </body>
 </html>
