@@ -20,9 +20,11 @@ function singleQ(id, html, correct) {
     render: () => html,
     options: ["(1)", "(2)", "(3)", "(4)", "(5)"],
     correct: [String(correct)],
-    answerCheck: (raw) => [String(raw)]?.[0] === String(correct),
+    // 只要把使用者選到的第一個值拿來比就好
+    answerCheck: (raw) => String(raw?.[0]) === String(correct),
   };
 }
+
 
 function multiQ(id, html, correctArray) {
   return {
@@ -257,7 +259,4 @@ window.__mountApp = function () {
   }
 };
 
-
-  showScore();
-  rerenderMath();
 };
