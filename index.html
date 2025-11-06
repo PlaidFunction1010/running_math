@@ -39,8 +39,42 @@
       padding: 40px;
     }
   </style>
+  <!-- 放在 <head> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script>
+(function boot(){
+  function ready(){ return document.readyState==='complete'||document.readyState==='interactive'; }
+  function katexReady(){ return typeof renderMathInElement === 'function'; }
+  function mount(){
+    if (!window.__APP_BOOTED && ready() && katexReady() && typeof window.__mountApp==='function'){
+      window.__APP_BOOTED = true; window.__mountApp();
+    } else { setTimeout(mount, 40); }
+  }
+  mount();
+})();
+</script>
+
 </head>
 <body>
+  <!-- 放在 <head> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script>
+(function boot(){
+  function ready(){ return document.readyState==='complete'||document.readyState==='interactive'; }
+  function katexReady(){ return typeof renderMathInElement === 'function'; }
+  function mount(){
+    if (!window.__APP_BOOTED && ready() && katexReady() && typeof window.__mountApp==='function'){
+      window.__APP_BOOTED = true; window.__mountApp();
+    } else { setTimeout(mount, 40); }
+  }
+  mount();
+})();
+</script>
+
   <div class="layout">
     <nav class="sidebar">
       <h2>選單</h2>
