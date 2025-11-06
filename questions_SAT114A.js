@@ -259,4 +259,4 @@ window.__mountApp = function () {
   }
 };
 
-};
+
